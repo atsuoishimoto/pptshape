@@ -1,13 +1,16 @@
 import os, sys
 from unittest import mock
-import pptshape.ppt
 import pptshape.directive
+try:
+    from pptshape import ppt
+except ImportError:
+    ppt = None
 
 TESTDIR = os.path.split(__file__)[0]
 
 def test_open():
-    ppt = pptshape.ppt.PPTShape(os.path.join(TESTDIR, 'testppt.pptx'))
-    shape = ppt.saveShape('shape-title', 
+    p = ppt.PPTShape(os.path.join(TESTDIR, 'testppt.pptx'))
+    shape = p.saveShape('shape-title', 
                 os.path.join(TESTDIR, 'aaa.png'))
     ppt.quit()
 

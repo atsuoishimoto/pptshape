@@ -9,6 +9,10 @@ setup(
     description = "Extract images from PPT files for Sphinx.",
     license = "BSD",
     url = "http://www.gembook.org",
+    install_requires=[
+        'sphinx',
+        'pytest',
+        ],
     packages=['pptshape'],
     classifiers=[
         "Development Status :: 3 - Alpha",
