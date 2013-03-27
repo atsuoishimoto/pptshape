@@ -12,7 +12,7 @@ def test_open():
     p = ppt.PPTShape(os.path.join(TESTDIR, 'testppt.pptx'))
     shape = p.saveShape('shape-title', 
                 os.path.join(TESTDIR, 'aaa.png'))
-    ppt.quit()
+    p.quit()
 
 def test_update():
     NAME_PNG = 'abc.png'
