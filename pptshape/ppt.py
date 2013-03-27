@@ -40,9 +40,16 @@ class PPTShape:
         #ppScaleToFit
         #ppScaleXY
         if shape:
+            SCALE = 4   # Expand size by 4 to texts to be unti-aliased.
+
+            # ScaleWidth and ScaleHeight are dimentions of slide in ppScaleXY
+            # mode.
+            w = self.presentation.SlideMaster.Width 
+            h = self.presentation.SlideMaster.Height
+
             shape.Export(filename, 
                 Filter=win32com.client.constants.ppShapeFormatPNG,
-                ScaleWidth=0, ScaleHeight=0,
-                ExportMode= win32com.client.constants.ppRelativeToSlide)
+                ScaleWidth=w*SCALE, ScaleHeight=h*SCALE,
+                ExportMode= win32com.client.constants.ppScaleXY)
 
 

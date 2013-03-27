@@ -10,8 +10,8 @@ TESTDIR = os.path.split(__file__)[0]
 
 def test_open():
     p = ppt.PPTShape(os.path.join(TESTDIR, 'testppt.pptx'))
-    shape = p.saveShape('shape-title', 
-                os.path.join(TESTDIR, 'aaa.png'))
+    shape = p.saveShape('assign_list', 
+                os.path.join(TESTDIR, 'assign.png'))
     p.quit()
 
 def test_update():
@@ -46,3 +46,4 @@ def test_update():
 
     directive.run()
     assert os.path.getsize(path_png) == 0
+
