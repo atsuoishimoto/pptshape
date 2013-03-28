@@ -40,7 +40,7 @@ class PPTShape:
         #ppScaleToFit
         #ppScaleXY
         if shape:
-            SCALE = 4   # Expand size by 4 to texts to be unti-aliased.
+            SCALE = 4   # Expand size by 4 to texts to be anti-aliased.
 
             # ScaleWidth and ScaleHeight are dimentions of slide in ppScaleXY
             # mode.
