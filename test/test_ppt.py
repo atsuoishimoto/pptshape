@@ -1,5 +1,9 @@
 import os, sys
-from unittest import mock
+try:
+    from unittest import mock
+except ImportError:
+    import mock
+
 import pptshape.directive
 try:
     from pptshape import ppt
@@ -9,12 +13,19 @@ except ImportError:
 TESTDIR = os.path.split(__file__)[0]
 
 def test_open():
+    if not ppt:
+        return
+
     p = ppt.PPTShape(os.path.join(TESTDIR, 'testppt.pptx'))
     shape = p.saveShape('assign_list', 
                 os.path.join(TESTDIR, 'assign.png'))
+
     p.quit()
 
 def test_update():
+    if not ppt:
+        return
+
     NAME_PNG = 'abc.png'
     path_png = os.path.join(TESTDIR, NAME_PNG)
 

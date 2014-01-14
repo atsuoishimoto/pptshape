@@ -29,7 +29,7 @@ class PPTShape(images.Image):
                     pptfile.saveShape(shapename, imagename)
                 pptfile.quit()
 
-        return super().run()
+        return super(PPTShape, self).run()
 
 
 def setup(app):
