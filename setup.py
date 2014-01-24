@@ -1,22 +1,28 @@
 import os
 from setuptools import setup
 
+def read(fname):
+    return open(
+            os.path.join(os.path.dirname(__file__), fname)).read()
+
 setup(
-    name = "ppt-shape",
-    version = "0.0.1",
+    name = "pptshape",
+    version = "0.0.2",
     author = "Atsuo Ishimoto",
     author_email = "ishimoto@gembook.org",
-    description = "Extract images from PPT files for Sphinx.",
+    description = "Extract images from PowerPoint presentation files for Sphinx.",
     license = "BSD",
-    url = "http://www.gembook.org",
+    url = "https://github.com/atsuoishimoto/pptshape",
+    long_description=read('README.rst'),
     install_requires=[
         'sphinx',
-        'pytest',
         ],
     packages=['pptshape'],
     classifiers=[
-        "Development Status :: 3 - Alpha",
-        "Topic :: Utilities",
+        "Development Status :: 5 - Production/Stable",
+        "Topic :: Software Development :: Documentation",
         "License :: OSI Approved :: BSD License",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
     ],
 )
