@@ -7,7 +7,7 @@ def read(fname):
 
 setup(
     name = "pptshape",
-    version = "0.0.2",
+    version = "0.0.3",
     author = "Atsuo Ishimoto",
     author_email = "ishimoto@gembook.org",
     description = "Extract images from PowerPoint presentation files for Sphinx.",
