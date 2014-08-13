@@ -10,10 +10,16 @@ def open(filename):
         raise
 
 class PPTShape:
+    VER_PP2007 = '12.0'
+
     def __init__(self, filename):
         self.ppt = win32com.client.gencache.EnsureDispatch("PowerPoint.Application") 
-        #self.ppt.Visible = 0
+        self.appver = map(int, self.ppt.Version.split('.'))
+        # [12, 0] for PP2007
+        self.old = self.appver <= [12, 0]
         self.filename = filename
+        if self.old:
+            self.ppt.Visible = 1 # need to open with PP2007
         self.presentation = self.ppt.Presentations.Open(self.filename)
 
     def quit(self):
@@ -60,6 +66,8 @@ class PPTShape:
     def findShape(self, name):
         if name.startswith('#'):
             return self.findShapeByIndex(name)
+        if self.old:
+            raise ValueError('shape index should be used for PowerPoint2007')
         for shape in self.shapes():
             if shape.Title == name:
                 return shape
