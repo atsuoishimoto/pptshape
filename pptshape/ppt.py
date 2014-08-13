@@ -25,7 +25,41 @@ class PPTShape:
             for shape in slide.Shapes:
                 yield shape
 
+    def findShapeByIndex(self, name):
+        # 'name' is a special shape name as index number(s):
+        #  1. '#n' ... whole running number
+        #     speify index number of shape in the document.
+        #  2. '#m.n' ... running number in the slide
+        #     specify slide number 'm' and shape number 'n'
+        #     'm' is index number of slide (page) in the document.
+        #     'n' is index number of shape in specified slide 'm'.
+        assert name.startswith('#')
+        nums = name[1:].split('.')
+        if len(nums) not in [1, 2]:
+            raise ValueError('invalid format of shape index')
+        nums = map(int, nums)
+        try:
+            if len(nums) == 2:
+                # '#m.n' format
+                slide = self.presentation.Slides.Item(nums[0])
+                shape = slide.Shapes.Item(nums[1])
+            else:
+                # '#n' format
+                shapes = list(self.shapes())
+                shape = shapes[nums[0] - 1]
+        except Exception, ex:
+            raise ValueError('nonexistent shape number: ' + name + '\n' + str(ex))
+        try:
+            t = shape.Title # can be error on PP2007
+        except AttributeError:
+            t = ''
+        #print 'extracting shape %s: %s' % (name, t)
+        return shape
+            
+
     def findShape(self, name):
+        if name.startswith('#'):
+            return self.findShapeByIndex(name)
         for shape in self.shapes():
             if shape.Title == name:
                 return shape

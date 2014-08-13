@@ -15,3 +15,7 @@ Contents:
    :pptfilename: testppt.pptx
    :shapename: shape-title
 
+
+.. ppt-shape:: nanashi.png
+   :pptfilename: testppt.pptx
+   :shapename: #2
