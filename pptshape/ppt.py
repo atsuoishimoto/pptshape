@@ -10,10 +10,16 @@ def open(filename):
         raise
 
 class PPTShape:
+    VER_PP2007 = '12.0'
+
     def __init__(self, filename):
         self.ppt = win32com.client.gencache.EnsureDispatch("PowerPoint.Application") 
-        #self.ppt.Visible = 0
+        self.appver = map(int, self.ppt.Version.split('.'))
+        # [12, 0] for PP2007
+        self.old = self.appver <= [12, 0]
         self.filename = filename
+        if self.old:
+            self.ppt.Visible = 1 # need to open with PP2007
         self.presentation = self.ppt.Presentations.Open(self.filename)
 
     def quit(self):
@@ -25,7 +31,43 @@ class PPTShape:
             for shape in slide.Shapes:
                 yield shape
 
+    def findShapeByIndex(self, name):
+        # 'name' is a special shape name as index number(s):
+        #  1. '#n' ... whole running number
+        #     speify index number of shape in the document.
+        #  2. '#m.n' ... running number in the slide
+        #     specify slide number 'm' and shape number 'n'
+        #     'm' is index number of slide (page) in the document.
+        #     'n' is index number of shape in specified slide 'm'.
+        assert name.startswith('#')
+        nums = name[1:].split('.')
+        if len(nums) not in [1, 2]:
+            raise ValueError('invalid format of shape index')
+        nums = map(int, nums)
+        try:
+            if len(nums) == 2:
+                # '#m.n' format
+                slide = self.presentation.Slides.Item(nums[0])
+                shape = slide.Shapes.Item(nums[1])
+            else:
+                # '#n' format
+                shapes = list(self.shapes())
+                shape = shapes[nums[0] - 1]
+        except Exception, ex:
+            raise ValueError('nonexistent shape number: ' + name + '\n' + str(ex))
+        try:
+            t = shape.Title # can be error on PP2007
+        except AttributeError:
+            t = ''
+        #print 'extracting shape %s: %s' % (name, t)
+        return shape
+            
+
     def findShape(self, name):
+        if name.startswith('#'):
+            return self.findShapeByIndex(name)
+        if self.old:
+            raise ValueError('shape index should be used for PowerPoint2007')
         for shape in self.shapes():
             if shape.Title == name:
                 return shape

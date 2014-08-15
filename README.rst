@@ -54,6 +54,26 @@ Usage
 
 7. Build sphinx project.
 
+
+Special shape name
+------------------
+
+There is a special form of shape name to specify with index number.
+There are two forms:
+
+1. `#n` ... index number as total running number.
+
+2. `#m.n` ... shape index number 'n' in slide number 'm'.
+
+Both `n` and `m` are digits as index number which is staring by 1.
+For example, `#1` is for first shape of the document,
+and `#2.1` is for first shape on 2nd. slide.
+
+This way is usefull for the document which cannot be modified to add
+shape title, or for old power point (2007 or before) which does not
+support shape title.
+
+
 Requirements
 ============
 
