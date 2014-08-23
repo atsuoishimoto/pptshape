@@ -58,16 +58,16 @@ Usage
 Special shape name
 ------------------
 
-There is a special form of shape name to specify with index number.
-There are two forms:
+Shapename in the pptshape directive starts with `#` specifies
+position in the PowerPoint presentation rather than title of the shape.
 
-1. `#n` ... index number as total running number.
+1. `#m.n` repesents `n` th shape in the `m` th slide.
 
-2. `#m.n` ... shape index number 'n' in slide number 'm'.
+2. `#n` represents `n` th shape through entire the ppt presentation.
 
-Both `n` and `m` are digits as index number which is staring by 1.
+Both `n` and `m` should be digit indexes pages and shapes from 1 and up.
 For example, `#1` is for first shape of the document,
-and `#2.1` is for first shape on 2nd. slide.
+and `#2.1` is for first shape in the second slide.
 
 This way is usefull for the document which cannot be modified to add
 shape title, or for old power point (2007 or before) which does not
