@@ -66,8 +66,6 @@ class PPTShape:
     def findShape(self, name):
         if name.startswith('#'):
             return self.findShapeByIndex(name)
-        if self.old:
-            raise ValueError('shape index should be used for PowerPoint2007')
         for shape in self.shapes():
             if shape.Title == name:
                 return shape
